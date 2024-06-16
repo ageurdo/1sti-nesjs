@@ -4,20 +4,21 @@ import {
   DeleteDateColumn,
   Entity,
   PrimaryGeneratedColumn,
+  Unique,
   UpdateDateColumn,
 } from 'typeorm';
 
-enum Role {
-  ADMIN,
-  USER,
+export enum Role {
+  ADMIN = 'ADMIN',
+  USER = 'USER',
 }
 
-enum RecordStatus {
-  ACTIVE,
-  REMOVED,
+export enum RecordStatus {
+  ACTIVE = 'ACTIVE',
+  REMOVED = 'REMOVED',
 }
-
-@Entity()
+@Entity('users')
+@Unique(['cpf'])
 export class User {
   @Column()
   @PrimaryGeneratedColumn()
@@ -29,7 +30,10 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ default: Role.USER })
+  @Column({
+    type: 'varchar',
+    default: Role.USER,
+  })
   role: Role;
 
   @Column()
@@ -59,7 +63,10 @@ export class User {
   @Column()
   zipCode: string;
 
-  @Column({ default: RecordStatus.ACTIVE })
+  @Column({
+    type: 'varchar',
+    default: RecordStatus.ACTIVE,
+  })
   status: RecordStatus;
 
   @Column()
@@ -74,7 +81,7 @@ export class User {
   updatedAt?: Date;
 
   @Column()
-  @Column({ nullable: true })
+  @Column({ default: 'system' })
   updatedBy?: string;
 
   @Column({ nullable: true })

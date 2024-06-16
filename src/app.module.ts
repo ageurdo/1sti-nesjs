@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import * as dotenv from 'dotenv';
+import { User } from './users/entities/user.entity';
 
 dotenv.config();
 @Module({
@@ -16,9 +17,9 @@ dotenv.config();
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      entities: [User],
       synchronize: true,
-      logging: false,
+      logging: true,
     }),
   ],
   controllers: [AppController],
