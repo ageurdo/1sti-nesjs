@@ -2,6 +2,7 @@ import { User } from '../entities/user.entity';
 
 export class ResponseUserDto {
   id: string;
+  cpf: string;
   name: string;
   dateOfBirth: Date;
   street: string;
@@ -15,6 +16,7 @@ export class ResponseUserDto {
   static fromUser(user: User): ResponseUserDto {
     const dto = new ResponseUserDto();
     dto.id = user.id.toString();
+    dto.cpf = user.cpf;
     dto.name = user.name;
     dto.dateOfBirth = user.dateOfBirth;
     dto.street = user.street;

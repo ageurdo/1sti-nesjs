@@ -58,38 +58,43 @@
 
   - Adicionar Dtos e validar rotas
   - [x] Rota - Criar usuário;
-
+        **Validações** 
     1.  [x] Usuário duplicado validado;
+    2.  [x] CPF Inválido em todos DTOs;
 
   - [x] Rota - Atualizar senha;
-        **Validações** 1. [x] Nova senha igual a atual; 2. [x] Nova senha e confirmação de senha diferentes; 3. [x] Senha diferente de 8 caracteres;
+        **Validações** 
+        1. [x] Nova senha igual a atual; 2. [x] Nova senha e confirmação de senha diferentes; 3. [x] Senha diferente de 8 caracteres;
 
   - [x] Rota - Usuário por id;
-        **Validações** 1. [x] Id não existente;
+        **Validações** 
+        1. [x] Id não existente;
 
   - [x] Rota - Todos usuários;
-        **Validações** 1. [x] Retorna apenas usuários ativos;
+        **Validações** 
+        1. [x] Retorna apenas usuários ativos;
   - [x] Rota - Atualizar usuário;
-        **Validações** 1. [x] Altera apenas dados simples, não é possível alterar cpf e id;
+        **Validações** 
+        1. [x] Altera apenas dados simples, não é possível alterar cpf e id;
   - [x] Padronizar e tratar Exceções 1. [x] Excessões padronizadas conforme os erros;
 
   - [x] Padronizar excessão de Bad Request e Method Not Allowed...
-  - [ ] Auth - Validar se usuário que vai autenticar esta deletado;
+  - [x] Auth - Validar se usuário que vai autenticar esta deletado;
 
-  - [ ] Delete - Capturar dados do usuário que esta fazendo request para anotar no deleteBy;
+  - [x] Delete - Capturar dados do usuário que esta fazendo request para anotar no deleteBy;
 
-- **[ ] 5: Documentar API**
+- **[ ] 5: Implementação da camada de segurança**
 
-  - [ ] Adicionar SpringDoc
-  - [ ] Documentar Rota - Criar usuário;
+  - [x] Implementar a camada de segurança utilizando o padrão de projeto JWT
+  - [x] Criar endpoints para autenticação
 
-  - [ ] Documentar Rota - Atualizar senha;
+  - [x] Implementar campos funcionais
+      1. [x] Quando o usuário for alterado atualizar campos não funcionais;
+      2. [x] Soft delete na mão (Campo status e DeletedBy);
 
-  - [ ] Documentar Rota - Usuário por id;
-  - [ ] Documentar Rota - Todos usuários;
-  - [ ] Documentar Rota - Atualizar usuário;
-
-  - [ ] Documentar Rota - Deletar usuário;
+  - Regras adicionais com base na Role (função)
+  - [ ] Um usuário com a função "User" apenas consultará e alterará recursos pertencentes ao mesmo;
+  - [ ] Um usuário com a função "Admin" consultará todos usuários da base, individualmente ou listando todos, mas só alterara os dados pertecentes a ele;
 
 - **[ ] 6: Implementação de testes**
 
@@ -104,19 +109,19 @@
 
   - [ ] Incluir nos testes autenticação para as rotas necessárias;
 
-- **[ ] 7: Implementação da camada de segurança**
+- **[ ] 6: Documentar API**
 
-  - [ ] Implementar a camada de segurança utilizando o padrão de projeto JWT
-  - [ ] Criar endpoints para autenticação
+  - [ ] Adicionar SpringDoc
+  - [ ] Documentar Rota - Criar usuário;
 
-  - [ ] Implementar Auditoria
+  - [ ] Documentar Rota - Atualizar senha;
 
-  - Regras adicionais com base na Role (função)
-  - [ ] Um usuário com a função "User" apenas consultará e alterará recursos pertencentes ao mesmo;
-  - [ ] Um usuário com a função "Admin" consultará todos usuários da base, individualmente ou listando todos, mas só alterara os dados pertecentes a ele;
+  - [ ] Documentar Rota - Usuário por id;
+  - [ ] Documentar Rota - Todos usuários;
+  - [ ] Documentar Rota - Atualizar usuário;
 
-  - [ ] Desbloquear rota do Swagger, bloqueada após implementação da autenticação;
-  - [ ] Quando o usuário for excluído atualizar campos virtais e soft delete na mão (Campo status)
+  - [ ] Documentar Rota - Deletar usuário;
+
 
 - **[ ] 8: Entrega do código fonte**
 

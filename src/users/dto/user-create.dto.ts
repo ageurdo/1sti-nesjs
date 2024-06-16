@@ -1,4 +1,6 @@
+import { IsCPF } from 'class-validator-cpf';
 export class CreateUserDto {
+  @IsCPF({ message: 'O CPF fornecido é inválido.' })
   cpf: string;
   password: string;
   name: string;

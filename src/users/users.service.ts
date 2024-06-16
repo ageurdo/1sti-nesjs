@@ -11,6 +11,7 @@ import { EntityNotFoundException } from 'src/exceptions/entity-not-found.excepti
 import { PasswordException } from 'src/exceptions/password.exception';
 import { Response } from 'express';
 import { CpfUniqueViolationException } from 'src/exceptions/cpf-unique-violation.exception';
+import { UserInsideHeaderRequestDto } from './dto/user-request-header.dto';
 
 @Injectable()
 export class UsersService {
@@ -64,8 +65,12 @@ export class UsersService {
     }
   }
 
-  findByCpf(cpf: string) {
-    return this.usersRepository.findBy({ cpf });
+  async findByCpf(cpf: string): Promise<User> {
+    const user = await this.usersRepository.findOne({ where: { cpf: cpf } });
+    if (!user) {
+      throw new EntityNotFoundException();
+    }
+    return user;
   }
 
   async update(id: string, dto: UpdateUserDto): Promise<ResponseUserDto> {
@@ -118,8 +123,12 @@ export class UsersService {
     return res.status(HttpStatus.NO_CONTENT).send();
   }
 
-  async softDeleteUser(id: number): Promise<void> {
+  async softDeleteUser(
+    id: number,
+    req: UserInsideHeaderRequestDto,
+  ): Promise<void> {
     const userDb = await this.findByIdAndReturnUserResponse(id.toString());
+    userDb.deletedBy = req.user.id.toString();
     userDb.status = RecordStatus.REMOVED;
     await this.usersRepository.save(userDb);
     await this.usersRepository.softDelete(id);
