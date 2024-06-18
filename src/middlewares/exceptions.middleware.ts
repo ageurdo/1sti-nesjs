@@ -5,16 +5,22 @@ import {
   HttpException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { AccessDeniedException } from 'src/exceptions/access-denied.exception';
-import { CpfUniqueViolationException } from 'src/exceptions/cpf-unique-violation.exception';
-import { EntityNotFoundException } from 'src/exceptions/entity-not-found.exception';
-import { PasswordException } from 'src/exceptions/password.exception';
+
+import {
+  UnauthorizedException,
+  AccessDeniedException,
+  CpfUniqueViolationException,
+  EntityNotFoundException,
+  PasswordException,
+} from 'src/exceptions';
 
 @Catch(
+  UnauthorizedException,
   AccessDeniedException,
   PasswordException,
   EntityNotFoundException,
   CpfUniqueViolationException,
+  AccessDeniedException,
 )
 export class ExceptionsMiddleware implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost) {
@@ -24,13 +30,13 @@ export class ExceptionsMiddleware implements ExceptionFilter {
     const status =
       exception instanceof HttpException ? exception.getStatus() : 500;
 
-    console.error(exception); // Aqui fazemos o log do erro
+    console.error(exception);
 
     response.status(status).json({
       statusCode: status,
       timestamp: new Date().toISOString(),
       path: request.url,
-      message: (exception as HttpException).message, // Aqui adicionamos a mensagem da exceção
+      message: (exception as HttpException).message,
     });
   }
 }

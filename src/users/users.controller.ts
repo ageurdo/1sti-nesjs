@@ -58,6 +58,6 @@ export class UsersController {
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
   remove(@Param('id') id: string, @Req() req: UserInsideHeaderRequestDto) {
-    return this.usersService.softDeleteUser(parseInt(id), req);
+    return this.usersService.softDeleteUser(parseInt(id), String(req.user.id));
   }
 }

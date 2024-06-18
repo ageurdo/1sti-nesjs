@@ -1,7 +1,6 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { UnauthorizedException } from 'src/exceptions/unauthorized.error.exception';
-
+import { UnauthorizedException } from 'src/exceptions';
 @Injectable()
 export class LocalAuthGuard extends AuthGuard('local') {
   canActivate(context: ExecutionContext) {

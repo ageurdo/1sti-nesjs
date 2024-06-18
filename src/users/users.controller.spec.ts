@@ -1,20 +1,94 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import {
+  passwordMock,
+  reqUserMock,
+  userMock,
+  userServiceMock,
+} from './user.mock.spec';
 import { UsersController } from './users.controller';
-import { UsersService } from './users.service';
+import { Response } from 'express';
+import { UpdateUserPasswordDto } from './dto/user-password-update.dto';
+import { UserInsideHeaderRequestDto } from './dto/user-request-header.dto';
+describe('UsersController Tests', () => {
+  let usersController: UsersController; // Altere o nome da variável aqui
 
-describe('UsersController', () => {
-  let controller: UsersController;
-
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+  beforeAll(async () => {
+    const moduleFixture: TestingModule = await Test.createTestingModule({
       controllers: [UsersController],
-      providers: [UsersService],
+      providers: [userServiceMock],
     }).compile();
 
-    controller = module.get<UsersController>(UsersController);
+    usersController = moduleFixture.get<UsersController>(UsersController); // E aqui
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  // it('Should be defined', () => {
+  //   expect(usersController).toBeDefined();
+  // });
+  it('Should get user', async () => {
+    const result = await usersController.findOne(userMock.id);
+    expect(result.name).toEqual(userMock.name);
+  });
+
+  it('Should get users', async () => {
+    const result = await usersController.findAll();
+    expect(result.length).toEqual(1);
+  });
+
+  it('Should create a user entity successfully', async () => {
+    const newUser = { ...userMock };
+    delete newUser.id;
+    const result = await usersController.create(newUser);
+    expect(result.id).toEqual(userMock.id);
+  });
+
+  it('Should not duplicate user', async () => {
+    const newUser = { ...userMock };
+    delete newUser.id;
+    await usersController.create(newUser);
+    try {
+      await usersController.create(newUser);
+      fail('Should have thrown an error due to duplicate key');
+    } catch (error) {
+      expect(error).toBeDefined();
+      // expect(error).toBeInstanceOf(DuplicateKeyError);
+    }
+  });
+
+  it('Should update user', async () => {
+    const userData = { ...userMock };
+    delete userData.id;
+    const result = await usersController.update(userMock.id, userData);
+    expect(result.id).toEqual(userMock.id);
+  });
+
+  it('Should update user password', async () => {
+    const passwordData = { ...passwordMock };
+    const res: Response = null;
+    const result = await usersController.updatePassword(
+      userMock.id,
+      passwordData as UpdateUserPasswordDto,
+      res as Response<any, Record<string, any>>,
+    );
+    expect(result).toBeTruthy();
+  });
+
+  it('Should return custom exception', async () => {
+    const passwordData = { ...passwordMock };
+    passwordData.newPassword = '12345676';
+    const res: Response = null;
+    const result = await usersController.updatePassword(
+      userMock.id,
+      passwordData as UpdateUserPasswordDto,
+      res as Response<any, Record<string, any>>,
+    );
+    expect(result).toBeTruthy();
+  });
+
+  it('Should delete user', async () => {
+    const result = await usersController.remove(
+      userMock.id,
+      reqUserMock as UserInsideHeaderRequestDto,
+    );
+    expect(result).toBeTruthy();
   });
 });

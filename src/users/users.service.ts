@@ -7,11 +7,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { ResponseUserDto } from './dto/user-response.dto';
 import { UpdateUserPasswordDto } from './dto/user-password-update.dto';
-import { EntityNotFoundException } from 'src/exceptions/entity-not-found.exception';
-import { PasswordException } from 'src/exceptions/password.exception';
+import { PasswordException } from 'src/exceptions';
 import { Response } from 'express';
-import { CpfUniqueViolationException } from 'src/exceptions/cpf-unique-violation.exception';
-import { UserInsideHeaderRequestDto } from './dto/user-request-header.dto';
+import {
+  EntityNotFoundException,
+  CpfUniqueViolationException,
+} from 'src/exceptions';
 
 @Injectable()
 export class UsersService {
@@ -123,12 +124,9 @@ export class UsersService {
     return res.status(HttpStatus.NO_CONTENT).send();
   }
 
-  async softDeleteUser(
-    id: number,
-    req: UserInsideHeaderRequestDto,
-  ): Promise<void> {
+  async softDeleteUser(id: number, reqUserId: string): Promise<void> {
     const userDb = await this.findByIdAndReturnUserResponse(id.toString());
-    userDb.deletedBy = req.user.id.toString();
+    userDb.deletedBy = reqUserId || 'Sem usuário';
     userDb.status = RecordStatus.REMOVED;
     await this.usersRepository.save(userDb);
     await this.usersRepository.softDelete(id);
