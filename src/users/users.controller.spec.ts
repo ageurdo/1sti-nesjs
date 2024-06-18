@@ -1,14 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import {
-  passwordMock,
-  reqUserMock,
-  userMock,
-  userServiceMock,
-} from './user.mock.spec';
+import { passwordMock, reqUserMock, userMock } from './user.mock.spec';
 import { UsersController } from './users.controller';
 import { Response } from 'express';
 import { UpdateUserPasswordDto } from './dto/user-password-update.dto';
 import { UserInsideHeaderRequestDto } from './dto/user-request-header.dto';
+import { userServiceMock } from './user-service-mock';
+import { CpfUniqueViolationException } from 'src/exceptions';
 describe('UsersController Tests', () => {
   let usersController: UsersController; // Altere o nome da variável aqui
 
@@ -21,9 +18,6 @@ describe('UsersController Tests', () => {
     usersController = moduleFixture.get<UsersController>(UsersController); // E aqui
   });
 
-  // it('Should be defined', () => {
-  //   expect(usersController).toBeDefined();
-  // });
   it('Should get user', async () => {
     const result = await usersController.findOne(userMock.id);
     expect(result.name).toEqual(userMock.name);
@@ -44,14 +38,9 @@ describe('UsersController Tests', () => {
   it('Should not duplicate user', async () => {
     const newUser = { ...userMock };
     delete newUser.id;
-    await usersController.create(newUser);
-    try {
+    await expect(async () => {
       await usersController.create(newUser);
-      fail('Should have thrown an error due to duplicate key');
-    } catch (error) {
-      expect(error).toBeDefined();
-      // expect(error).toBeInstanceOf(DuplicateKeyError);
-    }
+    }).rejects.toThrow(CpfUniqueViolationException);
   });
 
   it('Should update user', async () => {

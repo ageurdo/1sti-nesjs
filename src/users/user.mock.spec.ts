@@ -38,15 +38,3 @@ export const passwordMock = {
   newPassword: '12345677',
   confirmPassword: '12345677',
 };
-
-export const userServiceMock = {
-  provide: UsersService,
-  useValue: {
-    findAll: jest.fn().mockResolvedValue([userMock]),
-    findOne: jest.fn().mockResolvedValue(userMock),
-    create: jest.fn().mockResolvedValue(userMock),
-    update: jest.fn().mockResolvedValue(userMock),
-    updatePassword: jest.fn().mockResolvedValue(userMock),
-    softDeleteUser: jest.fn().mockResolvedValue(true),
-  },
-};

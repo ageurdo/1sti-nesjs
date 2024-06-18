@@ -111,16 +111,17 @@
 
 - **[ ] 6: Documentar API**
 
-  - [ ] Adicionar SpringDoc
-  - [ ] Documentar Rota - Criar usuário;
+  - [x] Adicionar Swagger
+  - [x] Documentar Rota - Criar usuário;
 
-  - [ ] Documentar Rota - Atualizar senha;
+  - [x] Documentar Rota - Atualizar senha;
 
-  - [ ] Documentar Rota - Usuário por id;
-  - [ ] Documentar Rota - Todos usuários;
-  - [ ] Documentar Rota - Atualizar usuário;
+  - [x] Documentar Rota - Usuário por id;
+  - [x] Documentar Rota - Todos usuários;
+  - [x] Documentar Rota - Atualizar usuário;
 
   - [ ] Documentar Rota - Deletar usuário;
+  - [ ] Autenticação
 
 
 - **[ ] 8: Entrega do código fonte**
