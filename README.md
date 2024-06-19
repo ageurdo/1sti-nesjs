@@ -1,6 +1,4 @@
-## Description
-
-**Desafio: Cadastro de Usuários com Operações**
+## Desafio: Cadastro de Usuários com Operações
 
 **Requisitos**
 
@@ -35,98 +33,100 @@
 
 **Checkpoints**
 
-- **[X] 1: Criação do repositório Git**
+- **1: Criação do repositório Git**
 
-  - Criar um repositório Git público para o desafio
-  - Adicionar o arquivo README.md com as instruções e requisitos do desafio
+  - [x] Criar um repositório Git público para o desafio
+  - [x] Adicionar o arquivo README.md com as instruções e requisitos do desafio
 
-- **[X] 2: Definição do modelo de dados**
+  </br>
+- **2: Definição do modelo de dados**
 
-  - Definir o modelo de dados para a entidade Usuário
-  - Criar as tabelas necessárias no banco de dados MySQL
+  - [x] Definir o modelo de dados para a entidade Usuário
+  - [x] Criar as tabelas necessárias no banco de dados MySQL
+  </br>
 
-- **[X] 3: Implementação da camada de persistência**
+- **3: Implementação da camada de persistência**
 
-  - Implementar a camada de persistência utilizando o banco de dados relacional MySQL
-  - Criar endpoints para CRUD (Create, Read, Update, Delete) de usuários
+  - [x] Implementar a camada de persistência utilizando o banco de dados relacional MySQL
+  - [x] Criar endpoints para CRUD (Create, Read, Update, Delete) de usuários
+  - [x] Criar endpoints para realizar operações de cadastro de usuários
+  </br>
+- **4: Implementação da lógica de negócio**
 
-  - Criar endpoints para realizar operações de cadastro de usuários
+  - [x] Implementar a lógica de negócios para a entidade Usuário
+  - [x] Utilizar Dtos e validar campos
 
-- **[X] 4: Implementação da lógica de negócio**
-
-  - Implementar a lógica de negócios para a entidade Usuário
-
-  - Adicionar Dtos e validar rotas
-  - [x] Rota - Criar usuário;
-        **Validações** 
+  - [x] Rota - Criar usuário;  
     1.  [x] Usuário duplicado validado;
-    2.  [x] CPF Inválido em todos DTOs;
-
+ 
   - [x] Rota - Atualizar senha;
-        **Validações** 
-        1. [x] Nova senha igual a atual; 2. [x] Nova senha e confirmação de senha diferentes; 3. [x] Senha diferente de 8 caracteres;
+         1. [x] Nova senha igual a atual; 2. [x] Nova senha e confirmação de senha diferentes; 3. [x] Senha diferente de 8 caracteres;
 
   - [x] Rota - Usuário por id;
-        **Validações** 
-        1. [x] Id não existente;
+         1. [x] Id não existente;
 
   - [x] Rota - Todos usuários;
-        **Validações** 
-        1. [x] Retorna apenas usuários ativos;
+         1. [x] Retorna apenas usuários ativos;
+       
   - [x] Rota - Atualizar usuário;
-        **Validações** 
-        1. [x] Altera apenas dados simples, não é possível alterar cpf e id;
+         1. [x] Altera apenas dados simples, não é possível alterar cpf e id;
+       
   - [x] Padronizar e tratar Exceções 1. [x] Excessões padronizadas conforme os erros;
 
   - [x] Padronizar excessão de Bad Request e Method Not Allowed...
+
   - [x] Auth - Validar se usuário que vai autenticar esta deletado;
 
   - [x] Delete - Capturar dados do usuário que esta fazendo request para anotar no deleteBy;
+  
+  </br>
 
-- **[ ] 5: Implementação da camada de segurança**
+- **5: Implementação da camada de segurança**
 
   - [x] Implementar a camada de segurança utilizando o padrão de projeto JWT
   - [x] Criar endpoints para autenticação
 
   - [x] Implementar campos funcionais
-      1. [x] Quando o usuário for alterado atualizar campos não funcionais;
-      2. [x] Soft delete na mão (Campo status e DeletedBy);
 
-  - Regras adicionais com base na Role (função)
+    1. [x] Quando o usuário for alterado atualizar campos não funcionais;
+    2. [x] Soft delete na mão (Campo status e DeletedBy);
+
+  - [ ] Regras adicionais com base na Role (função)
   - [ ] Um usuário com a função "User" apenas consultará e alterará recursos pertencentes ao mesmo;
   - [ ] Um usuário com a função "Admin" consultará todos usuários da base, individualmente ou listando todos, mas só alterara os dados pertecentes a ele;
+  
+  </br>
 
-- **[ ] 6: Implementação de testes**
+- **6: Implementação de testes**
 
-  - Criar testes para a aplicação utilizando frameworks de teste adequados
-  - Realizar testes ponta a ponta nas rotas abaixo
-  - [ ] CreateUser, CPF duplicado, CPF válido; Senha vazia, Senha inferior ou superior a 8 digitos
-  - [ ] UpdatePassowordenha, validar se senha é diferente de 8 digitos com id existente e não existente
-
-  - [ ] GetUserById, com id existente e não existente;
-  - [ ] GetAll;
-  - [ ] UpdateUser;
-
+  - [x] Criar testes 
+  - [x] Realizar testes 
+  - [x] UpdatePassoword
+  - [x] FindOne
+  - [x] FindAll;
+  - [x] Update;
+  - [x] SoftDelete;
   - [ ] Incluir nos testes autenticação para as rotas necessárias;
+  
+  </br>
 
-- **[ ] 6: Documentar API**
+- **7: Documentar API**
 
   - [x] Adicionar Swagger
   - [x] Documentar Rota - Criar usuário;
-
   - [x] Documentar Rota - Atualizar senha;
-
   - [x] Documentar Rota - Usuário por id;
   - [x] Documentar Rota - Todos usuários;
   - [x] Documentar Rota - Atualizar usuário;
+  - [x] Documentar Rota - Deletar usuário;
 
-  - [ ] Documentar Rota - Deletar usuário;
-  - [ ] Autenticação
+  - [x] Autenticação Via Swagger
+  
+  </br>
 
+- **8: Entrega do código fonte**
 
-- **[ ] 8: Entrega do código fonte**
-
-  - [ ] Criar instruções para iniciar ambiente
+  - [x] Criar instruções para iniciar ambiente
 
   - Entregar o código fonte em um repositório Git público
   - Incluir instruções claras para montar o ambiente, rodar os testes e rodar a aplicação
@@ -149,12 +149,11 @@
 
 - [Commit 3: Implementação da lógica de negócio](https://github.com/ageurdo/1sti-nesjs/commit/7e59608d5282cc5b387cdf77030800913268a867 'Commit 3')
 
-- [Commit 4: Implementação da lógica de negócio](https://github.com/ageurdo/1sti-nesjs/commit/7e59608d5282cc5b387cdf77030800913268a867 'Commit 4')
-- [Commit 5: Documentar API\](link para o commit)
+- [Commit 4: Implementação da camada de segurança](https://github.com/ageurdo/1sti-nesjs/commit/9a7dfcb6f0a3e04df618174c1d6a1cc83e4b1f45 'Commit 4')
 
-- [Commit 6: Implementação de testes\](link para o commit)
+- [Commit 5: Implementação do Swagger](https://github.com/ageurdo/1sti-nesjs/commit/6a667e59afd3708cce8a7b88c1d201f53182f287 'Commit 5')
 
-- [Commit 7: Implementação da camada de segurança\](link para o commit)
+- [Commit 6: Implementação da Testes User Controller](https://github.com/ageurdo/1sti-nesjs/commit/4b94d3e5964ef8d2825b5011dcabc8c081fcc04b 'Commit 6')
 
 **Instruções para montar o ambiente**
 

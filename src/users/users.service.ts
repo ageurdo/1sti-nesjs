@@ -44,9 +44,9 @@ export class UsersService {
     return users.map((user) => ResponseUserDto.fromUser(user));
   }
 
-  async findOne(id: string): Promise<ResponseUserDto> {
+  async findOne(id: number): Promise<ResponseUserDto> {
     const user = await this.usersRepository.findOne({
-      where: { id: parseInt(id, 10) },
+      where: { id: id },
     });
 
     if (!user) {
@@ -56,10 +56,10 @@ export class UsersService {
     return ResponseUserDto.fromUser(user);
   }
 
-  async findByIdAndReturnUserResponse(id: string) {
+  async findByIdAndReturnUserResponse(id: number) {
     try {
       return await this.usersRepository.findOneOrFail({
-        where: { id: parseInt(id, 10) },
+        where: { id: id },
       });
     } catch (error) {
       throw new EntityNotFoundException();
@@ -74,7 +74,7 @@ export class UsersService {
     return user;
   }
 
-  async update(id: string, dto: UpdateUserDto): Promise<ResponseUserDto> {
+  async update(id: number, dto: UpdateUserDto): Promise<ResponseUserDto> {
     const userDb = await this.findByIdAndReturnUserResponse(id);
 
     userDb.city = dto.city;
@@ -94,7 +94,7 @@ export class UsersService {
     return updatedUser;
   }
 
-  async updatePassword(id: string, dto: UpdateUserPasswordDto, res: Response) {
+  async updatePassword(id: number, dto: UpdateUserPasswordDto, res: Response) {
     const userDb = await this.findByIdAndReturnUserResponse(id);
 
     if (!bcrypt.compareSync(dto.currentPassword, userDb.password)) {
@@ -124,9 +124,9 @@ export class UsersService {
     return res.status(HttpStatus.NO_CONTENT).send();
   }
 
-  async softDeleteUser(id: number, reqUserId: string): Promise<void> {
-    const userDb = await this.findByIdAndReturnUserResponse(id.toString());
-    userDb.deletedBy = reqUserId || 'Sem usuário';
+  async softDelete(id: number, reqUserId: number): Promise<void> {
+    const userDb = await this.findByIdAndReturnUserResponse(id);
+    userDb.deletedBy = reqUserId || 0;
     userDb.status = RecordStatus.REMOVED;
     await this.usersRepository.save(userDb);
     await this.usersRepository.softDelete(id);

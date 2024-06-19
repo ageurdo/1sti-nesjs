@@ -52,7 +52,7 @@ export class UsersController {
   @ApiOperation({ summary: 'Get a user by ID' })
   @ApiParam({ name: 'id', description: 'User ID' })
   @ApiResponse({ status: 200, description: 'User found' })
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.usersService.findOne(id);
   }
 
@@ -62,7 +62,7 @@ export class UsersController {
   @ApiParam({ name: 'id', description: 'User ID' })
   @ApiBody({ type: UpdateUserDto })
   @ApiResponse({ status: 200, description: 'User updated successfully' })
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
   }
 
@@ -73,7 +73,7 @@ export class UsersController {
   @ApiBody({ type: UpdateUserPasswordDto })
   @ApiResponse({ status: 204, description: 'Password updated successfully' })
   updatePassword(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() updateUserPasswordDto: UpdateUserPasswordDto,
     @Res() res: Response,
   ) {
@@ -85,7 +85,7 @@ export class UsersController {
   @ApiOperation({ summary: 'Delete a user' })
   @ApiParam({ name: 'id', description: 'User ID' })
   @ApiResponse({ status: 204, description: 'User deleted successfully' })
-  remove(@Param('id') id: string, @Req() req: UserInsideHeaderRequestDto) {
-    return this.usersService.softDeleteUser(parseInt(id), String(req.user.id));
+  softDelete(@Param('id') id: number, @Req() req: UserInsideHeaderRequestDto) {
+    return this.usersService.softDelete(id, req.user.id);
   }
 }

@@ -89,5 +89,5 @@ export class User {
   deletedAt?: Date;
 
   @Column({ nullable: true })
-  deletedBy: string;
+  deletedBy: number;
 }
