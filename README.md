@@ -139,67 +139,71 @@
 - Cobertura de testes adequada
 - Documentação clara e completa
 
-**Histórico de Commits**
-
-- [Commit 1: Criação do repositório Git](https://github.com/ageurdo/1sti-nesjs/commit/af7894d32b66c06f218ce2337867655672f2193a 'Commit 1')
-
-- [Commit 2: Definição do modelo de dados ](https://github.com/ageurdo/1sti-nesjs/commit/c0a8605b74224530f787132f8f90e2f3724fee90 'Commit 2')
-
-- [Commit 2: Implementação da camada de persistência](https://github.com/ageurdo/1sti-nesjs/commit/c0a8605b74224530f787132f8f90e2f3724fee90 'Commit 2')
-
-- [Commit 3: Implementação da lógica de negócio](https://github.com/ageurdo/1sti-nesjs/commit/7e59608d5282cc5b387cdf77030800913268a867 'Commit 3')
-
-- [Commit 4: Implementação da camada de segurança](https://github.com/ageurdo/1sti-nesjs/commit/9a7dfcb6f0a3e04df618174c1d6a1cc83e4b1f45 'Commit 4')
-
-- [Commit 5: Implementação do Swagger](https://github.com/ageurdo/1sti-nesjs/commit/6a667e59afd3708cce8a7b88c1d201f53182f287 'Commit 5')
-
-- [Commit 6: Implementação da Testes User Controller](https://github.com/ageurdo/1sti-nesjs/commit/4b94d3e5964ef8d2825b5011dcabc8c081fcc04b 'Commit 6')
-
 **Instruções para montar o ambiente**
 
-- [Instruções para montar o ambiente](link para as instruções)
-
-- 1: Na pasta **./instructions** há um **docker-compose.yml**
-- 2: Na pasta **./instructions** há uma **sql** para criar o banco, usuário para o banco, atribuição de privilégios e inserção do primeiro usuário com role 'ADMIN'\*\*
-- **3: Configuração do banco src/main/resources/application.properties'**
-  ![Connection Instructions](/instructions/connection.png)
-
-**Instruções para rodar os testes**
-
-- \[Instruções para rodar os testes\](link para as instruções)
-
-**Instruções para rodar a aplicação**
-
-- \[Instruções para rodar a aplicação\](link para as instruções)
-
-## Installation
+- **1: Execute o docker-compose.yml via cmd para levantar um servidor Mysql**
 
 ```bash
-$ yarn install
+$ docker-compose up -d
 ```
 
-## Running the app
+- **2: Execute o sql no seu gerenciador de banco de dados**
 
 ```bash
-# development
-$ yarn run start
+ -- Criar banco de dados
+CREATE DATABASE 1sti2;
 
-# watch mode
-$ yarn run start:dev
+-- Criar usuário MainUser
+CREATE USER 'MainUser' IDENTIFIED BY 'MainPassword';
 
-# production mode
-$ yarn run start:prod
+-- Atribuir permissões totais ao usuário MainUser sobre o banco de dados 1sti2
+GRANT ALL PRIVILEGES ON 1sti2.* TO 'MainUser'@'%';
+
+-- Dar permissão para o usuário MainUser criar tabelas, inserir dados, etc.
+GRANT CREATE, INSERT, UPDATE, DELETE, DROP, INDEX, ALTER ON 1sti2.* TO 'MainUser'@'%';
+
+-- Atualizar privilégios
+FLUSH PRIVILEGES;
+
+-- Cria usuário administrador, não há rota para tronar um usuário administrador via Api;
+INSERT INTO users (id, cpf, password, name, date_of_birth, role, street, number, complement, neighborhood, city, state, status, zip_code, created_at, created_by, updated_at, updated_by, deleted_at, deleted_by)
+VALUES (1, '73553655500', '$2a$12$UI31aDSVDESajV3h.ASAsO2O0x.Ldt./7cOoPE6yI4ghkBpnjD9La', 'Rebeca Sara Barbosa', '1990-02-20T10:00:00','ROLE_ADMIN', 'Rua da Praia', '456', 'Casa 2', 'Praia Grande', 'Santos', 'SP', 0, '11015-000', '2024-06-13T10:00:00', 'SQL Teste Banco H2', null, null, null, null);
 ```
 
-## Test
+Obs: execute um bloco por vez. Na imagem abaixo fiz a configuração com o Azure Data Studio;
+
+  !Connection Instructions
+
+## Variáveis de ambiente
 
 ```bash
-# unit tests
-$ yarn run test
 
-# e2e tests
-$ yarn run test:e2e
+# Database
+DB_TYPE=mysql
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=1sti2
+DB_USER=root
+DB_PASSWORD=RootPassword
 
-# test coverage
-$ yarn run test:cov
+# JWt
+JWT_SECRET=Zeg*%[7?X[<dU+EN{9|&M^T2G?Ld:x
+JWT_EXPIRES_IN='30m'
 ```
+
+## Testes
+
+Para rodar os testes abra o terminal do Vscode e execute os comandos abaixo:
+
+```bash
+yarn test || npm run test
+```
+
+![Connection Instructions](./instructions/tests.png)
+
+
+## Insomnia
+Na pasta ./Instructions há um arquivo com o nome de Insomnia_NestJs, você pode importar ele para o mesmo, todas rotas estarão configuradas neste arquivo.
+
+## Swagger
+Para abrir o swagger com o projeto já iniciado abra no navegador esta url: http://localhost/api
